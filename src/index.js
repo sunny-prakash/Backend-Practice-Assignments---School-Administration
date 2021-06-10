@@ -40,19 +40,18 @@ app.put("/api/student/:id", (req, res) => {
     const { name, currentClass, division } = req.body;
     let student = studentArray.find((s) => s.id === parseInt(req.params.id));
     if (!student) return res.status(400).send("data not found");
-    if (name) {
-        student.name = name;
+    if (name || currentClass || division) {
+        if (name) {
+            student.name = name;
+        }
+        if (currentClass) {
+            student.currentClass = parseInt(currentClass);
+        }
+        if (division) {
+            student.division = division;
+        }
         return res.status(200).send(student);
-    }
-    if (currentClass) {
-        student.currentClass = currentClass;
-        return res.status(200).send(student);
-    }
-    if (division) {
-        student.division = division;
-        return res.status(200).send(student);
-    }
-    res.status(400).send("data not found");
+    } else res.status(400).send("data not found");
 });
 
 app.delete("/api/student/:id", (req, res) => {
