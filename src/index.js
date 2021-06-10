@@ -37,13 +37,22 @@ app.post("/api/student", (req, res) => {
 });
 
 app.put("/api/student/:id", (req, res) => {
-    const { name } = req.body;
+    const { name, currentClass, division } = req.body;
     let student = studentArray.find((s) => s.id === req.params.id);
     if (!student) return res.status(400).send("data not found");
-    if (!name) return res.status(400).send("data not found");
-
-    student.name = name;
-    res.send({ name: student.name });
+    if (name) {
+        student.name = name;
+        res.status(200).send(student);
+    }
+    if (currentClass) {
+        student.currentClass = currentClass;
+        res.status(200).send(student);
+    }
+    if (division) {
+        student.division = division;
+        res.status(200).send(student);
+    }
+    res.status(400).send("data not found");
 });
 
 app.delete("/api/student/:id", (req, res) => {
