@@ -38,25 +38,25 @@ app.post("/api/student", (req, res) => {
 
 app.put("/api/student/:id", (req, res) => {
     const { name, currentClass, division } = req.body;
-    let student = studentArray.find((s) => s.id === req.params.id);
+    let student = studentArray.find((s) => s.id === parseInt(req.params.id));
     if (!student) return res.status(400).send("data not found");
     if (name) {
         student.name = name;
-        res.status(200).send(student);
+        return res.status(200).send(student);
     }
     if (currentClass) {
         student.currentClass = currentClass;
-        res.status(200).send(student);
+        return res.status(200).send(student);
     }
     if (division) {
         student.division = division;
-        res.status(200).send(student);
+        return res.status(200).send(student);
     }
     res.status(400).send("data not found");
 });
 
 app.delete("/api/student/:id", (req, res) => {
-    let student = studentArray.find((s) => s.id === req.params.id);
+    let student = studentArray.find((s) => s.id === parseInt(req.params.id));
     if (!student) return res.status(404).send("data not found");
 
     let index = studentArray.indexOf(student);
